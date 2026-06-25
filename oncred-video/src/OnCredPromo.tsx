@@ -1,6 +1,8 @@
 import {
   AbsoluteFill,
   Sequence,
+  Img,
+  Audio,
   useCurrentFrame,
   useVideoConfig,
   interpolate,
@@ -16,12 +18,12 @@ loadFont({
   url: staticFile("fonts/Montserrat.ttf"),
 });
 
-// ---- Brand ----
-const NAVY_DEEP = "#04132E";
-const NAVY = "#0A2A63";
-const BLUE = "#1657C8";
-const YELLOW = "#FFC42E";
-const GREEN = "#00D68F";
+// ---- Brand (extracted from official logo SVG) ----
+const NAVY_DEEP = "#001634";
+const NAVY = "#002E6C"; // brand navy
+const BLUE = "#0A4AA0";
+const GREEN = "#029739"; // brand green
+const GREEN_LIGHT = "#36D06A"; // brighter green for accents/contrast on navy
 const WHITE = "#FFFFFF";
 
 const EASE_OUT = Easing.bezier(0.16, 1, 0.3, 1);
@@ -73,13 +75,13 @@ const Background: React.FC = () => {
     >
       <AbsoluteFill
         style={{
-          background: `radial-gradient(circle at 50% 18%, rgba(0,214,143,0.30), transparent 55%)`,
+          background: `radial-gradient(circle at 50% 18%, rgba(2,151,57,0.32), transparent 55%)`,
           translate: `0px ${interpolate(drift, [0, 1], [-30, 30])}px`,
         }}
       />
       <AbsoluteFill
         style={{
-          background: `radial-gradient(circle at 80% 90%, rgba(255,196,46,0.22), transparent 50%)`,
+          background: `radial-gradient(circle at 80% 90%, rgba(2,151,57,0.30), transparent 50%)`,
           translate: `0px ${interpolate(drift, [0, 1], [40, -40])}px`,
         }}
       />
@@ -88,7 +90,7 @@ const Background: React.FC = () => {
 };
 
 // Lightning bolt mark
-const Bolt: React.FC<{ size: number; color?: string }> = ({ size, color = YELLOW }) => (
+const Bolt: React.FC<{ size: number; color?: string }> = ({ size, color = GREEN_LIGHT }) => (
   <svg width={size} height={size} viewBox="0 0 24 24" fill="none">
     <path
       d="M13 2 4 14h6l-1 8 9-12h-6l1-8z"
@@ -100,14 +102,9 @@ const Bolt: React.FC<{ size: number; color?: string }> = ({ size, color = YELLOW
   </svg>
 );
 
-// ---- Logo lockup ----
-const Logo: React.FC<{ fontSize?: number }> = ({ fontSize = 56 }) => (
-  <div style={{ display: "flex", alignItems: "center", gap: 8, fontFamily }}>
-    <Bolt size={fontSize * 0.85} color={GREEN} />
-    <span style={{ fontSize, fontWeight: 800, color: WHITE, letterSpacing: -1 }}>
-      On<span style={{ color: GREEN }}>Cred</span>
-    </span>
-  </div>
+// ---- Official logo (SVG, white wordmark + brand green mark, transparent bg) ----
+const Logo: React.FC<{ width?: number }> = ({ width = 220 }) => (
+  <Img src={staticFile("logo.svg")} style={{ width, height: "auto" }} />
 );
 
 // ---- Scene 1: Hook ----
@@ -126,11 +123,11 @@ const SceneHook: React.FC = () => {
             width: 190,
             height: 190,
             borderRadius: "50%",
-            background: "rgba(255,196,46,0.12)",
+            background: "rgba(54,208,106,0.14)",
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            boxShadow: "0 0 80px rgba(255,196,46,0.45)",
+            boxShadow: "0 0 80px rgba(54,208,106,0.45)",
           }}
         >
           <Bolt size={120} />
@@ -151,7 +148,7 @@ const SceneHook: React.FC = () => {
       >
         Precisa de
         <br />
-        <span style={{ color: YELLOW }}>dinheiro rápido?</span>
+        <span style={{ color: GREEN_LIGHT }}>dinheiro rápido?</span>
       </h1>
     </div>
   );
@@ -196,9 +193,9 @@ const SceneSpeed: React.FC = () => {
             fontFamily,
             fontSize: 200,
             fontWeight: 800,
-            color: YELLOW,
+            color: GREEN_LIGHT,
             lineHeight: 1,
-            textShadow: "0 0 50px rgba(255,196,46,0.5)",
+            textShadow: "0 0 50px rgba(54,208,106,0.5)",
           }}
         >
           1
@@ -220,7 +217,7 @@ const SceneSpeed: React.FC = () => {
           padding: "16px 34px",
           borderRadius: 100,
           border: `2px solid ${GREEN}`,
-          background: "rgba(0,214,143,0.12)",
+          background: "rgba(54,208,106,0.12)",
           fontFamily,
           fontSize: 34,
           fontWeight: 700,
@@ -277,7 +274,7 @@ const SceneEnergy: React.FC = () => {
               width: 58,
               height: 58,
               borderRadius: 14,
-              background: "rgba(255,196,46,0.18)",
+              background: "rgba(2,151,57,0.16)",
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
@@ -357,7 +354,7 @@ const SceneCTA: React.FC = () => {
           opacity: logoEnter,
         }}
       >
-        <Logo fontSize={78} />
+        <Logo width={300} />
       </div>
       <h2
         style={{
@@ -374,18 +371,18 @@ const SceneCTA: React.FC = () => {
       >
         Simule agora e receba
         <br />
-        <span style={{ color: YELLOW }}>em até 1 hora</span>
+        <span style={{ color: GREEN_LIGHT }}>em até 1 hora</span>
       </h2>
       <div
         style={{
           padding: "26px 60px",
           borderRadius: 100,
-          background: `linear-gradient(90deg, ${GREEN}, #19E6A4)`,
+          background: `linear-gradient(90deg, ${GREEN}, #36D06A)`,
           fontFamily,
           fontSize: 40,
           fontWeight: 800,
           color: NAVY_DEEP,
-          boxShadow: "0 16px 50px rgba(0,214,143,0.5)",
+          boxShadow: "0 16px 50px rgba(2,151,57,0.5)",
           opacity: enter(frame, 36),
           scale: String(enter(frame, 36) * btnPulse),
         }}
@@ -417,7 +414,7 @@ const ProgressBar: React.FC = () => {
   return (
     <AbsoluteFill style={{ justifyContent: "flex-start" }}>
       <div style={{ height: 8, width: "100%", background: "rgba(255,255,255,0.12)" }}>
-        <div style={{ height: "100%", width: `${pct}%`, background: YELLOW }} />
+        <div style={{ height: "100%", width: `${pct}%`, background: GREEN_LIGHT }} />
       </div>
     </AbsoluteFill>
   );
@@ -426,12 +423,13 @@ const ProgressBar: React.FC = () => {
 export const OnCredPromo: React.FC = () => {
   return (
     <AbsoluteFill style={{ backgroundColor: NAVY_DEEP }}>
+      <Audio src={staticFile("music.mp3")} volume={0.85} />
       <Background />
 
       {/* Persistent small logo top-left after intro */}
       <Sequence from={96} name="watermark">
-        <AbsoluteFill style={{ alignItems: "center", justifyContent: "flex-start", paddingTop: 54 }}>
-          <Logo fontSize={34} />
+        <AbsoluteFill style={{ alignItems: "center", justifyContent: "flex-start", paddingTop: 40 }}>
+          <Logo width={150} />
         </AbsoluteFill>
       </Sequence>
 
