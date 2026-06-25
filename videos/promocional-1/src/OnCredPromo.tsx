@@ -354,7 +354,7 @@ const SceneCTA: React.FC = () => {
           opacity: logoEnter,
         }}
       >
-        <Logo width={300} />
+        <Logo width={360} />
       </div>
       <h2
         style={{
@@ -423,13 +423,21 @@ const ProgressBar: React.FC = () => {
 export const OnCredPromo: React.FC = () => {
   return (
     <AbsoluteFill style={{ backgroundColor: NAVY_DEEP }}>
-      <Audio src={staticFile("music.mp3")} volume={0.85} />
+      <Audio
+        src={staticFile("music-inspiration.mp3")}
+        volume={(f) =>
+          interpolate(f, [0, 18, 420, 450], [0, 0.85, 0.85, 0], {
+            extrapolateLeft: "clamp",
+            extrapolateRight: "clamp",
+          })
+        }
+      />
       <Background />
 
       {/* Persistent small logo top-left after intro */}
       <Sequence from={96} name="watermark">
         <AbsoluteFill style={{ alignItems: "center", justifyContent: "flex-start", paddingTop: 40 }}>
-          <Logo width={150} />
+          <Logo width={180} />
         </AbsoluteFill>
       </Sequence>
 
