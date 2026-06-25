@@ -37,10 +37,10 @@ const enter = (frame: number, start: number, dur = 18) =>
   });
 
 // Scene wrapper that fades the whole scene in and out near its edges
-const Scene: React.FC<{ durationInFrames: number; children: React.ReactNode }> = ({
-  durationInFrames,
-  children,
-}) => {
+const Scene: React.FC<{
+  durationInFrames: number;
+  children: React.ReactNode;
+}> = ({ durationInFrames, children }) => {
   const frame = useCurrentFrame();
   const opacity = interpolate(
     frame,
@@ -90,7 +90,10 @@ const Background: React.FC = () => {
 };
 
 // Lightning bolt mark
-const Bolt: React.FC<{ size: number; color?: string }> = ({ size, color = GREEN_LIGHT }) => (
+const Bolt: React.FC<{ size: number; color?: string }> = ({
+  size,
+  color = GREEN_LIGHT,
+}) => (
   <svg width={size} height={size} viewBox="0 0 24 24" fill="none">
     <path
       d="M13 2 4 14h6l-1 8 9-12h-6l1-8z"
@@ -116,7 +119,14 @@ const SceneHook: React.FC = () => {
   });
   const pulse = 1 + 0.05 * Math.sin(frame / 6);
   return (
-    <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 46 }}>
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        gap: 46,
+      }}
+    >
       <div style={{ scale: String(boltScale * pulse) }}>
         <div
           style={{
@@ -163,7 +173,14 @@ const SceneSpeed: React.FC = () => {
     easing: Easing.bezier(0.34, 1.56, 0.64, 1),
   });
   return (
-    <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 18 }}>
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        gap: 18,
+      }}
+    >
       <p
         style={{
           fontFamily,
@@ -237,7 +254,14 @@ const SceneEnergy: React.FC = () => {
   const frame = useCurrentFrame();
   const cardEnter = enter(frame, 8, 22);
   return (
-    <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 40 }}>
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        gap: 40,
+      }}
+    >
       <h2
         style={{
           fontFamily,
@@ -268,7 +292,14 @@ const SceneEnergy: React.FC = () => {
           rotate: `${interpolate(cardEnter, [0, 1], [-4, 0])}deg`,
         }}
       >
-        <div style={{ display: "flex", alignItems: "center", gap: 14, marginBottom: 22 }}>
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            gap: 14,
+            marginBottom: 22,
+          }}
+        >
           <div
             style={{
               width: 58,
@@ -283,10 +314,19 @@ const SceneEnergy: React.FC = () => {
             <Bolt size={36} color="#E8A400" />
           </div>
           <div style={{ display: "flex", flexDirection: "column" }}>
-            <span style={{ fontFamily, fontSize: 28, fontWeight: 800, color: NAVY }}>
+            <span
+              style={{ fontFamily, fontSize: 28, fontWeight: 800, color: NAVY }}
+            >
               Conta de Energia
             </span>
-            <span style={{ fontFamily, fontSize: 20, fontWeight: 600, color: "#7A8699" }}>
+            <span
+              style={{
+                fontFamily,
+                fontSize: 20,
+                fontWeight: 600,
+                color: "#7A8699",
+              }}
+            >
               Vencimento mensal
             </span>
           </div>
@@ -306,7 +346,14 @@ const SceneEnergy: React.FC = () => {
               opacity: enter(frame, 30 + i * 8),
             }}
           >
-            <span style={{ fontFamily, fontSize: 26, fontWeight: 600, color: "#48536B" }}>
+            <span
+              style={{
+                fontFamily,
+                fontSize: 26,
+                fontWeight: 600,
+                color: "#48536B",
+              }}
+            >
               {label}
             </span>
             <span
@@ -347,7 +394,14 @@ const SceneCTA: React.FC = () => {
   const logoEnter = enter(frame, 4, 20);
   const btnPulse = 1 + 0.04 * Math.sin(frame / 7);
   return (
-    <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 44 }}>
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        gap: 44,
+      }}
+    >
       <div
         style={{
           scale: String(logoEnter),
@@ -413,8 +467,16 @@ const ProgressBar: React.FC = () => {
   const pct = interpolate(frame, [0, durationInFrames], [0, 100]);
   return (
     <AbsoluteFill style={{ justifyContent: "flex-start" }}>
-      <div style={{ height: 8, width: "100%", background: "rgba(255,255,255,0.12)" }}>
-        <div style={{ height: "100%", width: `${pct}%`, background: GREEN_LIGHT }} />
+      <div
+        style={{
+          height: 8,
+          width: "100%",
+          background: "rgba(255,255,255,0.12)",
+        }}
+      >
+        <div
+          style={{ height: "100%", width: `${pct}%`, background: GREEN_LIGHT }}
+        />
       </div>
     </AbsoluteFill>
   );
@@ -433,38 +495,38 @@ export const OnCredPromo: React.FC = () => {
         }
       />
       <Background />
-
       {/* Persistent small logo top-left after intro */}
       <Sequence from={96} name="watermark">
-        <AbsoluteFill style={{ alignItems: "center", justifyContent: "flex-start", paddingTop: 40 }}>
+        <AbsoluteFill
+          style={{
+            alignItems: "center",
+            justifyContent: "flex-start",
+            paddingTop: 40,
+          }}
+        >
           <Logo width={180} />
         </AbsoluteFill>
       </Sequence>
-
       <Sequence from={0} durationInFrames={96} name="Hook">
         <Scene durationInFrames={96}>
           <SceneHook />
         </Scene>
       </Sequence>
-
       <Sequence from={96} durationInFrames={114} name="Speed">
         <Scene durationInFrames={114}>
           <SceneSpeed />
         </Scene>
       </Sequence>
-
       <Sequence from={210} durationInFrames={120} name="Energy">
         <Scene durationInFrames={120}>
           <SceneEnergy />
         </Scene>
       </Sequence>
-
       <Sequence from={330} durationInFrames={120} name="CTA">
         <Scene durationInFrames={120}>
           <SceneCTA />
         </Scene>
       </Sequence>
-
       <ProgressBar />
     </AbsoluteFill>
   );
